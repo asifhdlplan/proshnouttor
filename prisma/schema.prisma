@@ -1,0 +1,181 @@
+// =============================================================
+//  Proshnouttor — Prisma Schema
+//  Database: PostgreSQL
+//  Auth: NextAuth.js compatible (Account, Session, VerificationToken)
+// =============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+//  User  (NextAuth compatible)
+// ─────────────────────────────────────────────
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?   // null for OAuth users
+  reputation     Int       @default(1)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // NextAuth relations
+  accounts Account[]
+  sessions Session[]
+
+  // App relations
+  questions Question[]
+  answers   Answer[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+//  Account  (NextAuth — OAuth provider tokens)
+// ─────────────────────────────────────────────
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+// ─────────────────────────────────────────────
+//  Session  (NextAuth — active sessions)
+// ─────────────────────────────────────────────
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ─────────────────────────────────────────────
+//  VerificationToken  (NextAuth — magic link / email OTP)
+// ─────────────────────────────────────────────
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─────────────────────────────────────────────
+//  Question
+// ─────────────────────────────────────────────
+model Question {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  votes       Int      @default(0)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  answers Answer[]
+  tags    QuestionTag[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([votes])
+  @@map("questions")
+}
+
+// ─────────────────────────────────────────────
+//  Answer
+// ─────────────────────────────────────────────
+model Answer {
+  id         String   @id @default(cuid())
+  content    String   @db.Text
+  votes      Int      @default(0)
+  isAccepted Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([questionId])
+  @@map("answers")
+}
+
+// ─────────────────────────────────────────────
+//  Tag
+// ─────────────────────────────────────────────
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#6366f1")
+  createdAt DateTime @default(now())
+
+  questions QuestionTag[]
+
+  @@map("tags")
+}
+
+// ─────────────────────────────────────────────
+//  QuestionTag  (many-to-many join)
+// ─────────────────────────────────────────────
+model QuestionTag {
+  questionId String
+  tagId      String
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([questionId, tagId])
+  @@map("question_tags")
+}
+
+// ─────────────────────────────────────────────
+//  Announcement  (admin-managed site banners)
+// ─────────────────────────────────────────────
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String   @db.Text
+  type      String   @default("info")  // info | warning | success | urgent
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active])
+  @@index([createdAt])
+  @@map("announcements")
+}
