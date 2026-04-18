@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   Tailwind v4 @theme — dynamic primary & accent color scales
+   Resolved at runtime via CSS custom properties per data-theme
+   ═══════════════════════════════════════════════════════════════ */
+@theme {
+  --color-primary-50:  var(--p-50);
+  --color-primary-100: var(--p-100);
+  --color-primary-200: var(--p-200);
+  --color-primary-300: var(--p-300);
+  --color-primary-400: var(--p-400);
+  --color-primary-500: var(--p-500);
+  --color-primary-600: var(--p-600);
+  --color-primary-700: var(--p-700);
+  --color-primary-800: var(--p-800);
+  --color-primary-900: var(--p-900);
+  --color-primary-950: var(--p-950);
+
+  --color-accent-50:  var(--a-50);
+  --color-accent-100: var(--a-100);
+  --color-accent-200: var(--a-200);
+  --color-accent-300: var(--a-300);
+  --color-accent-400: var(--a-400);
+  --color-accent-500: var(--a-500);
+  --color-accent-600: var(--a-600);
+  --color-accent-700: var(--a-700);
+  --color-accent-800: var(--a-800);
+  --color-accent-900: var(--a-900);
+  --color-accent-950: var(--a-950);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME DEFINITIONS — each theme sets --p-* (primary) & --a-* (accent)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Blue Theme (default) ──────────────────────────────────────── */
+:root,
+[data-theme="blue"] {
+  --p-50:  #EEF2FF;
+  --p-100: #E0E7FF;
+  --p-200: #C7D2FE;
+  --p-300: #A5B4FC;
+  --p-400: #818CF8;
+  --p-500: #6366F1;
+  --p-600: #4F46E5;
+  --p-700: #4338CA;
+  --p-800: #3730A3;
+  --p-900: #312E81;
+  --p-950: #1E1B4B;
+
+  --a-50:  #ECFEFF;
+  --a-100: #CFFAFE;
+  --a-200: #A5F3FC;
+  --a-300: #67E8F9;
+  --a-400: #22D3EE;
+  --a-500: #06B6D4;
+  --a-600: #0891B2;
+  --a-700: #0E7490;
+  --a-800: #155E75;
+  --a-900: #164E63;
+  --a-950: #083344;
+
+  --theme-bg:       #F8FAFC;
+  --theme-card:     #FFFFFF;
+  --theme-text:     #0F172A;
+  --theme-text-secondary: #64748B;
+  --theme-border:   #E2E8F0;
+  color-scheme: light;
+}
+
+/* ── Purple Theme ──────────────────────────────────────────────── */
+[data-theme="purple"] {
+  --p-50:  #FAF5FF;
+  --p-100: #F3E8FF;
+  --p-200: #E9D5FF;
+  --p-300: #D8B4FE;
+  --p-400: #C084FC;
+  --p-500: #A855F7;
+  --p-600: #9333EA;
+  --p-700: #7E22CE;
+  --p-800: #6B21A8;
+  --p-900: #581C87;
+  --p-950: #3B0764;
+
+  --a-50:  #FDF4FF;
+  --a-100: #FAE8FF;
+  --a-200: #F5D0FE;
+  --a-300: #F0ABFC;
+  --a-400: #E879F9;
+  --a-500: #D946EF;
+  --a-600: #C026D3;
+  --a-700: #A21CAF;
+  --a-800: #86198F;
+  --a-900: #701A75;
+  --a-950: #4A044E;
+
+  --theme-bg:       #FAFAF9;
+  --theme-card:     #FFFFFF;
+  --theme-text:     #1C1917;
+  --theme-text-secondary: #78716C;
+  --theme-border:   #E7E5E4;
+  color-scheme: light;
+}
+
+/* ── Green Theme ───────────────────────────────────────────────── */
+[data-theme="green"] {
+  --p-50:  #ECFDF5;
+  --p-100: #D1FAE5;
+  --p-200: #A7F3D0;
+  --p-300: #6EE7B7;
+  --p-400: #34D399;
+  --p-500: #10B981;
+  --p-600: #059669;
+  --p-700: #047857;
+  --p-800: #065F46;
+  --p-900: #064E3B;
+  --p-950: #022C22;
+
+  --a-50:  #F0FDFA;
+  --a-100: #CCFBF1;
+  --a-200: #99F6E4;
+  --a-300: #5EEAD4;
+  --a-400: #2DD4BF;
+  --a-500: #14B8A6;
+  --a-600: #0D9488;
+  --a-700: #0F766E;
+  --a-800: #115E59;
+  --a-900: #134E4A;
+  --a-950: #042F2E;
+
+  --theme-bg:       #F0FDF4;
+  --theme-card:     #FFFFFF;
+  --theme-text:     #052E16;
+  --theme-text-secondary: #4D7C0F;
+  --theme-border:   #D9F99D;
+  color-scheme: light;
+}
+
+/* ── Dark Mode ─────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --p-50:  #1E1B4B;
+  --p-100: #312E81;
+  --p-200: #3730A3;
+  --p-300: #4338CA;
+  --p-400: #6366F1;
+  --p-500: #818CF8;
+  --p-600: #A5B4FC;
+  --p-700: #C7D2FE;
+  --p-800: #A5B4FC;
+  --p-900: #C7D2FE;
+  --p-950: #E0E7FF;
+
+  --a-50:  #083344;
+  --a-100: #164E63;
+  --a-200: #155E75;
+  --a-300: #0E7490;
+  --a-400: #0891B2;
+  --a-500: #22D3EE;
+  --a-600: #67E8F9;
+  --a-700: #A5F3FC;
+  --a-800: #67E8F9;
+  --a-900: #A5F3FC;
+  --a-950: #CFFAFE;
+
+  --theme-bg:       #0F172A;
+  --theme-card:     #1E293B;
+  --theme-text:     #F1F5F9;
+  --theme-text-secondary: #94A3B8;
+  --theme-border:   #334155;
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--p-300);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--p-400);
+}
+
+/* Smooth focus outline */
+:focus-visible {
+  outline: 2px solid var(--p-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME-DEPENDENT UTILITIES (for complex dynamic styling)
+   ═══════════════════════════════════════════════════════════════ */
+
+.theme-card {
+  background-color: var(--theme-card);
+  border-color: var(--theme-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-text {
+  color: var(--theme-text);
+}
+
+.theme-text-secondary {
+  color: var(--theme-text-secondary);
+}
+
+.theme-border {
+  border-color: var(--theme-border);
+}
+
+/* Gradient button helper */
+.theme-gradient {
+  background: linear-gradient(135deg, var(--p-600), var(--a-500));
+}
+
+.theme-gradient:hover {
+  background: linear-gradient(135deg, var(--p-500), var(--a-400));
+}
+
+/* Gradient shadow */
+.theme-shadow {
+  box-shadow: 0 4px 14px -3px var(--p-200);
+}
+
+[data-theme="dark"] .theme-shadow {
+  box-shadow: 0 4px 14px -3px var(--p-950);
+}
+
+/* Theme-aware ring for inputs */
+.theme-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--p-100);
+  border-color: var(--p-400);
+}
+
+[data-theme="dark"] .theme-ring:focus {
+  box-shadow: 0 0 0 3px var(--p-50);
+  border-color: var(--p-300);
+}
+
+/* Active nav pill highlight */
+.theme-nav-active {
+  background-color: var(--p-50);
+  color: var(--p-700);
+  border-color: var(--p-100);
+}
+
+[data-theme="dark"] .theme-nav-active {
+  background-color: var(--p-50);
+  color: var(--p-700);
+  border-color: var(--p-100);
+}
+
+/* Smooth transitions for theme changes */
+.theme-transition {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Animations for modals and transitions
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+.animate-fade-in { animation: fadeIn 0.2s ease-out; }
+.animate-scale-in { animation: scaleIn 0.25s ease-out; }
+.animate-slide-in { animation: slideInLeft 0.3s ease-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-shake { animation: shake 0.5s ease-in-out; }
+.animate-pulse-red { animation: pulse-red 1.5s ease-in-out infinite; }
+
+/* Announcement bar animations */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOutUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-100%); }
+}
+.animate-slide-down { animation: slideDown 0.35s ease-out; }
+.animate-fade-out-up { animation: fadeOutUp 0.3s ease-in forwards; }
